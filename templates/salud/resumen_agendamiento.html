@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Comprobante de Pre-agendamiento{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-4">
+    <div class="col-md-8">
+        <div class="card shadow border-0">
+            <div class="card-header bg-success text-white py-3 text-center">
+                <h3 class="mb-0 fw-bold"><i class="fa-solid fa-circle-check me-2"></i>¡Pre-agendamiento Solicitado con Éxito!</h3>
+            </div>
+            <div class="card-body p-4">
+                <div class="alert alert-light border">
+                    <h5 class="fw-bold text-dark mb-2">Datos del Paciente:</h5>
+                    <p class="mb-1"><strong>Nombre:</strong> {{ usuario.get_full_name|default:usuario.username }}</p>
+                    <p class="mb-1"><strong>Correo Electrónico:</strong> {{ usuario.email }}</p>
+                    <p class="mb-1"><strong>RUT:</strong> {{ usuario.perfil.rut|default:"No informado" }}</p>
+                    <p class="mb-0"><strong>Teléfono:</strong> {{ usuario.perfil.telefono|default:"No informado" }}</p>
+                </div>
+
+                <h5 class="fw-bold text-dark mt-4 mb-3">Detalle de Prestaciones Reservadas:</h5>
+                <ul class="list-group mb-4">
+                    {% for item in items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-secondary me-2">{{ item.codigo }}</span>
+                            <strong>{{ item.nombre }}</strong> ({{ item.especialidad }}) x {{ item.cantidad }}
+                        </div>
+                        <span class="fw-bold text-success">${{ item.arancel }} CLP c/u</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="bg-light p-3 rounded text-end mb-4">
+                    <p class="mb-1">Subtotal: <strong>${{ subtotal }} CLP</strong></p>
+                    <p class="mb-1 text-success">Bonificación Fonasa (20%): <strong>-${{ descuento_fonasa }} CLP</strong></p>
+                    <h4 class="fw-bold text-primary mb-0">Total Estimado a Pagar: ${{ total_final }} CLP</h4>
+                </div>
+
+                <div class="alert alert-warning small">
+                    <i class="fa-solid fa-clock me-1"></i> Se ha reservado de manera transitoria la atención. Favor presentarse en el Centro Médico Vitalis 15 minutos antes de su cita con este comprobante simulado.
+                </div>
+
+                <div class="d-grid">
+                    <a href="{% url 'catalogo' %}" class="btn btn-primary"><i class="fa-solid fa-house me-1"></i> Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
