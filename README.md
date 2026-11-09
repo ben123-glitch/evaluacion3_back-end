@@ -10,8 +10,6 @@ Entidad Principal Gestionable (ORM):** `PrestacionMedica`
 
 ---
 
-## Requisitos e Instalación Paso a Paso![](image.png)
-
 ### 1. Clonar el repositorio y crear entorno virtual
 ```bash
 python -m venv .venv
